@@ -6,6 +6,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
@@ -17,6 +19,7 @@ import ma.medical_app.medical_app.security.entities.User;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Doctor extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

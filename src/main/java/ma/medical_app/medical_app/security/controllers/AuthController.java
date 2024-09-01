@@ -16,6 +16,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ma.medical_app.medical_app.entities.Doctor;
+import ma.medical_app.medical_app.entities.Patient;
 import ma.medical_app.medical_app.security.dto.AuthenticationRequest;
 import ma.medical_app.medical_app.security.dto.TokenResponse;
 import ma.medical_app.medical_app.security.entities.Role;
@@ -46,10 +48,20 @@ public class AuthController {
     @Autowired
     private AuthenticationService authenticationService;
 
-    @PostMapping("/register")
-    public ResponseEntity<Object> register(
-            @RequestBody User user) throws JsonProcessingException {
-        String jwtToken = authenticationService.register(user);
+    @PostMapping("/register/doctor")
+    public ResponseEntity<Object> registerDoctor(
+            @RequestBody Doctor user) throws JsonProcessingException {
+        String jwtToken = authenticationService.registerDoctor(user);
+        if (jwtToken == null)
+            return ResponseEntity.badRequest().body("User Already exists");
+        else
+            return ResponseEntity.ok(new TokenResponse(jwtToken));
+    }
+
+    @PostMapping("/register/patient")
+    public ResponseEntity<Object> registerPatient(
+            @RequestBody Patient user) throws JsonProcessingException {
+        String jwtToken = authenticationService.registerPatient(user);
         if (jwtToken == null)
             return ResponseEntity.badRequest().body("User Already exists");
         else

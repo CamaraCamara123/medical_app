@@ -30,8 +30,24 @@ public class MedicalAppApplication {
 	@Bean
 	CommandLineRunner init() {
 		return args -> {
+
+			// Creating the admin role
 			Role adminRole = Role.builder().name("ROLE_ADMIN").build();
 			adminRole = roleRepository.save(adminRole);
+
+			// Creating the admin role
+			Role secretatyRole = Role.builder().name("ROLE_SECRETARY").build();
+			secretatyRole = roleRepository.save(secretatyRole);
+
+			// Creating the admin role
+			Role doctoRole = Role.builder().name("ROLE_DOCTOR").build();
+			doctoRole = roleRepository.save(doctoRole);
+
+			// Creating the admin role
+			Role patientRole = Role.builder().name("ROLE_PATIENT").build();
+			patientRole = roleRepository.save(patientRole);
+
+			
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			var admin = User.builder()
 					.firstName("Camara")

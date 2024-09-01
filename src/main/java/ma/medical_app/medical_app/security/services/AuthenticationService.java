@@ -8,6 +8,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import ma.medical_app.medical_app.entities.Doctor;
+import ma.medical_app.medical_app.entities.Patient;
+import ma.medical_app.medical_app.repositories.DoctorRepository;
+import ma.medical_app.medical_app.repositories.PatientRepository;
 import ma.medical_app.medical_app.security.dto.AuthenticationRequest;
 import ma.medical_app.medical_app.security.entities.Token;
 import ma.medical_app.medical_app.security.entities.User;
@@ -27,6 +31,12 @@ public class AuthenticationService {
     private JwtService jwtService;
 
     @Autowired
+    private DoctorRepository doctorRepository;
+
+    @Autowired
+    private PatientRepository patientRepository;
+
+    @Autowired
     private TokenRepository tokenRepository;
 
     @Autowired
@@ -35,14 +45,27 @@ public class AuthenticationService {
     @Autowired
     private RoleRepository roleRepository;
 
-    public String register(User user) {
+    public String registerDoctor(Doctor user) {
         if (userRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail()).orElse(null) != null) {
             return null;
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        var userRole = roleRepository.findByName("ROLE_USER").orElse(null);
+        var userRole = roleRepository.findByName("ROLE_DOCTOR").orElse(null);
         user.setRoles(Set.of(userRole));
-        var savedUser = userRepository.save(user);
+        var savedUser = doctorRepository.save(user);
+        var jwtToken = jwtService.generateToken(user);
+        saveUserToken(savedUser, jwtToken);
+        return jwtToken;
+    }
+
+    public String registerPatient(Patient user) {
+        if (userRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail()).orElse(null) != null) {
+            return null;
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        var userRole = roleRepository.findByName("ROLE_PATIENT").orElse(null);
+        user.setRoles(Set.of(userRole));
+        var savedUser = patientRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         saveUserToken(savedUser, jwtToken);
         return jwtToken;
