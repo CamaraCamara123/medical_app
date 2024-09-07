@@ -1,0 +1,14 @@
+// Things to do concerning the backend
+
+- Register as a patient - DONE
+- Register as a doctor - DONE
+- Authenticate as a patient - Done
+- Authenticate as a doctor - Done
+- List the doctors based on the prefecture, and specialty
+- Get a rendez-vous with a doctor !!!!!!!!!
+    -- Automatically create a creneau for that doctor
+- The doctors gets a list of his rendez-vous
+- Add email verification
+- Username is setup as the email ????
+
+// Things to do concerning the frontend

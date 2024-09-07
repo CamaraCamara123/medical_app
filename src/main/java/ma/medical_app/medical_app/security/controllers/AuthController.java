@@ -20,6 +20,7 @@ import ma.medical_app.medical_app.entities.Doctor;
 import ma.medical_app.medical_app.entities.Patient;
 import ma.medical_app.medical_app.security.dto.AuthenticationRequest;
 import ma.medical_app.medical_app.security.dto.TokenResponse;
+import ma.medical_app.medical_app.security.dto.UserAuthenticated;
 import ma.medical_app.medical_app.security.entities.Role;
 import ma.medical_app.medical_app.security.entities.User;
 import ma.medical_app.medical_app.security.services.AuthenticationService;
@@ -51,31 +52,31 @@ public class AuthController {
     @PostMapping("/register/doctor")
     public ResponseEntity<Object> registerDoctor(
             @RequestBody Doctor user) throws JsonProcessingException {
-        String jwtToken = authenticationService.registerDoctor(user);
-        if (jwtToken == null)
+        UserAuthenticated userauth = authenticationService.registerDoctor(user);
+        if (userauth == null)
             return ResponseEntity.badRequest().body("User Already exists");
         else
-            return ResponseEntity.ok(new TokenResponse(jwtToken));
+            return ResponseEntity.ok(new TokenResponse(userauth));
     }
 
     @PostMapping("/register/patient")
     public ResponseEntity<Object> registerPatient(
             @RequestBody Patient user) throws JsonProcessingException {
-        String jwtToken = authenticationService.registerPatient(user);
-        if (jwtToken == null)
+        UserAuthenticated userauth = authenticationService.registerPatient(user);
+        if (userauth == null)
             return ResponseEntity.badRequest().body("User Already exists");
         else
-            return ResponseEntity.ok(new TokenResponse(jwtToken));
+            return ResponseEntity.ok(new TokenResponse(userauth));
     }
 
     @PostMapping("/authenticate")
     public ResponseEntity<Object> authenticate(@RequestBody AuthenticationRequest request) {
         System.out.println(request);
-        String jwtToken = authenticationService.authenticate(request);
-        if (jwtToken == null) {
+        UserAuthenticated userauth = authenticationService.authenticate(request);
+        if (userauth == null) {
             return ResponseEntity.badRequest().body("Email or password incorrect");
         } else {
-            return ResponseEntity.ok(new TokenResponse(jwtToken));
+            return ResponseEntity.ok(new TokenResponse(userauth));
         }
     }
 

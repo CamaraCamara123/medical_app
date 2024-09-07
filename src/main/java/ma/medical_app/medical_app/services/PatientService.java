@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+import ma.medical_app.medical_app.entities.Creneau;
 import ma.medical_app.medical_app.entities.Patient;
 import ma.medical_app.medical_app.repositories.PatientRepository;
 
@@ -37,5 +38,11 @@ public class PatientService {
             return true;
         }
         return false;
+    }
+
+    // Get a rendez vous with a doctor
+
+    public void takeRendezVous(Patient patient,Creneau creneau) {
+        // TODO: implement method
     }
 }

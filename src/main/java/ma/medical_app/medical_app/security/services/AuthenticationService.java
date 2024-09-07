@@ -13,6 +13,7 @@ import ma.medical_app.medical_app.entities.Patient;
 import ma.medical_app.medical_app.repositories.DoctorRepository;
 import ma.medical_app.medical_app.repositories.PatientRepository;
 import ma.medical_app.medical_app.security.dto.AuthenticationRequest;
+import ma.medical_app.medical_app.security.dto.UserAuthenticated;
 import ma.medical_app.medical_app.security.entities.Token;
 import ma.medical_app.medical_app.security.entities.User;
 import ma.medical_app.medical_app.security.repositories.RoleRepository;
@@ -45,7 +46,7 @@ public class AuthenticationService {
     @Autowired
     private RoleRepository roleRepository;
 
-    public String registerDoctor(Doctor user) {
+    public UserAuthenticated registerDoctor(Doctor user) {
         if (userRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail()).orElse(null) != null) {
             return null;
         }
@@ -55,10 +56,11 @@ public class AuthenticationService {
         var savedUser = doctorRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         saveUserToken(savedUser, jwtToken);
-        return jwtToken;
+        UserAuthenticated userauth = new UserAuthenticated(user, jwtToken);
+        return userauth;
     }
 
-    public String registerPatient(Patient user) {
+    public UserAuthenticated registerPatient(Patient user) {
         if (userRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail()).orElse(null) != null) {
             return null;
         }
@@ -68,7 +70,8 @@ public class AuthenticationService {
         var savedUser = patientRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         saveUserToken(savedUser, jwtToken);
-        return jwtToken;
+        UserAuthenticated userauth = new UserAuthenticated(user, jwtToken);
+        return userauth;
     }
 
     private void saveUserToken(User savedUser, String jwtToken) {
@@ -81,7 +84,7 @@ public class AuthenticationService {
         tokenRepository.save(token);
     }
 
-    public String authenticate(AuthenticationRequest request) {
+    public UserAuthenticated authenticate(AuthenticationRequest request) {
         try {
             System.out.println(request);
             authenticationManager
@@ -92,7 +95,8 @@ public class AuthenticationService {
             var jwtToken = jwtService.generateToken(user);
             // revokeAllUserTokens(user);
             saveUserToken(user, jwtToken);
-            return jwtToken;
+            UserAuthenticated userauth = new UserAuthenticated(user, jwtToken);
+            return userauth;
         } catch (Exception e) {
             System.out
                     .println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + e.getMessage());

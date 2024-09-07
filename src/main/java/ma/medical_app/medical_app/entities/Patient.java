@@ -3,6 +3,7 @@ package ma.medical_app.medical_app.entities;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,6 +25,6 @@ public class Patient extends User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(fetch = FetchType.EAGER ,mappedBy = "patient")
     private List<RendezVous> rendezVous;
 }
