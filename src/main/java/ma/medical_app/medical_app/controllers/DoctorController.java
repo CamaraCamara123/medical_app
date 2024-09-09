@@ -2,6 +2,7 @@ package ma.medical_app.medical_app.controllers;
 
 import java.util.List;
 
+import ma.medical_app.medical_app.repositories.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,11 +12,18 @@ import ma.medical_app.medical_app.entities.Doctor;
 import ma.medical_app.medical_app.services.DoctorService;
 
 @RestController
-@RequestMapping("/doctors")
+@RequestMapping("/api/v1/auth/doctors")
 public class DoctorController {
 
     @Autowired
     private DoctorService doctorService;
+
+    @Autowired
+    private final DoctorRepository doctorRepository;
+
+    public DoctorController(DoctorRepository doctorRepository) {
+        this.doctorRepository = doctorRepository;
+    }
 
     @PostMapping
     public ResponseEntity<Doctor> createDoctor(@RequestBody Doctor doctor) {
@@ -31,9 +39,10 @@ public class DoctorController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Doctor>> getAllDoctors() {
-        List<Doctor> doctors = doctorService.findAll();
-        return new ResponseEntity<>(doctors, HttpStatus.OK);
+    public ResponseEntity<List<Doctor>> getAllDoctors() { // Corrected return type
+        List<Doctor> doctors = doctorRepository.findAll();
+        System.out.println("doctors are : "+doctors);
+        return new ResponseEntity<>(doctors, HttpStatus.OK); // Returning ResponseEntity
     }
 
     @GetMapping("/{id}")

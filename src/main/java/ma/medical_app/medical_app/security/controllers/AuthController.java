@@ -38,6 +38,7 @@ class UserInfo {
     private String username;
     private String email;
     private Set<Role> roles;
+    private Long id;
 
 }
 
@@ -85,6 +86,7 @@ public class AuthController {
         var user = (User) authentication.getPrincipal();
         // user.setTodos(null);
         return UserInfo.builder()
+                .id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())

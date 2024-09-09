@@ -11,7 +11,7 @@ import ma.medical_app.medical_app.entities.Patient;
 import ma.medical_app.medical_app.services.PatientService;
 
 @RestController
-@RequestMapping("/patients")
+@RequestMapping("/api/v1/auth/patients")
 public class PatientController {
 
     @Autowired

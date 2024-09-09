@@ -11,7 +11,7 @@ import ma.medical_app.medical_app.entities.Avis;
 import ma.medical_app.medical_app.services.AvisService;
 
 @RestController
-@RequestMapping("/avis")
+@RequestMapping("/api/v1/auth/avis")
 public class AvisController {
 
     @Autowired

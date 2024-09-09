@@ -14,27 +14,27 @@ import ma.medical_app.medical_app.repositories.PatientRepository;
 @Transactional
 public class PatientService {
     @Autowired 
-    PatientRepository PatientRepository;
+    PatientRepository patientRepository;
 
     public Patient save(Patient patient){
-        return PatientRepository.save(patient);
+        return patientRepository.save(patient);
     }
 
     public Patient update(Patient patient){
-        return PatientRepository.save(patient);
+        return patientRepository.save(patient);
     }
 
     public List<Patient> findAll(){
-        return PatientRepository.findAll();
+        return patientRepository.findAll();
     }
 
     public Patient findById(Long id){
-        return PatientRepository.findById(id).orElse(null);
+        return patientRepository.findById(id).orElse(null);
     }
 
     public boolean delete(Long id){
-        if(PatientRepository.existsById(id)){
-            PatientRepository.deleteById(id);
+        if(patientRepository.existsById(id)){
+            patientRepository.deleteById(id);
             return true;
         }
         return false;

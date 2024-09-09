@@ -27,7 +27,7 @@ public class MedicalAppApplication {
 		SpringApplication.run(MedicalAppApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	CommandLineRunner init() {
 		return args -> {
 
@@ -49,14 +49,14 @@ public class MedicalAppApplication {
 
 			
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-			var admin = User.builder()
-					.firstName("Camara")
-					.lastName("Aboudramane")
-					.username("camso123").email("admin@gmail.com")
-					.password(passwordEncoder.encode("admin"))
-					.roles(Set.of(adminRole))
+			var doctor = User.builder()
+					.firstName("Bouchra")
+					.lastName("ennahhal")
+					.username("enn172").email("bouchra@gmail.com")
+					.password(passwordEncoder.encode("bouchra"))
+					.roles(Set.of(doctoRole))
 					.build();
-			userRepository.save(admin);
+			userRepository.save(doctor);
 		};
-	}
+	}*/
 }
